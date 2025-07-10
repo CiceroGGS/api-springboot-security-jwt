@@ -1,7 +1,9 @@
 package com.cicerodev.pratica_springboot.controller;
 
+import com.cicerodev.pratica_springboot.exceptions.RecursoNaoEncontradoException;
 import com.cicerodev.pratica_springboot.model.ProdutoModel;
 import com.cicerodev.pratica_springboot.service.ProdutoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +26,14 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProdutoModel> listarProdutos(@PathVariable Long id) {
-        return produtoService.bucarPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> listarProdutos(@PathVariable Long id) {
+        try {
+            ProdutoModel produto = produtoService.bucarPorId(id);
+            return ResponseEntity.ok(produto);
+        }
+        catch (RecursoNaoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @PostMapping
