@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "produtos")
 public class ProdutoModel {
+
     /*====================================================*/
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -13,13 +15,16 @@ public class ProdutoModel {
     private Double preco;
 
     /*====================================================*/
+
     public ProdutoModel(){}
 
     public ProdutoModel(String nome, Double preco) {
         this.nome = nome;
         this.preco = preco;
     }
+
     /*====================================================*/
+
     public Long getId() {
         return id;
     }
@@ -39,5 +44,6 @@ public class ProdutoModel {
     public void setPreco(Double preco) {
         this.preco = preco;
     }
+
     /*====================================================*/
 }
